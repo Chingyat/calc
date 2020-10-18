@@ -11,7 +11,7 @@ pub enum Expr {
     FuncCall(String, Vec<Expr>),
 }
 
-pub struct ParseContext<I: Iterator<Item=char>> {
+pub struct ParseContext<I: Iterator<Item = char>> {
     it: Peekable<I>,
 }
 
@@ -31,8 +31,8 @@ impl fmt::Display for ParseError {
 impl error::Error for ParseError {}
 
 impl<I> ParseContext<I>
-    where
-        I: Iterator<Item=char>
+where
+    I: Iterator<Item = char>,
 {
     fn new(i: I) -> Self {
         Self { it: i.peekable() }
@@ -140,7 +140,7 @@ impl<I> ParseContext<I>
                             return Err(ParseError::UnexpectedEOF);
                         }
                     }
-                }
+                },
             }
         }
 
@@ -185,7 +185,7 @@ impl<I> ParseContext<I>
             match self.it.peek() {
                 Some(&c @ '0'..='9') => {
                     self.it.next().unwrap();
-                    decimal = (c as u32 - '0' as u32) as f64 * decimal_precision + decimal;
+                    decimal += (c as u32 - '0' as u32) as f64 * decimal_precision;
                     decimal_precision /= 10.0;
                 }
                 _ => {
@@ -211,8 +211,9 @@ impl fmt::Display for EvalError {
 
 impl error::Error for EvalError {}
 
+type FunctionMap = HashMap<String, Box<dyn Fn(&EvalContext, &Vec<Expr>) -> Result<f64, EvalError>>>;
 pub struct EvalContext {
-    functions: HashMap<String, Box<dyn Fn(&EvalContext, &Vec<Expr>) -> Result<f64, EvalError>>>,
+    functions: FunctionMap,
 }
 
 impl EvalContext {
@@ -275,13 +276,9 @@ impl Default for EvalContext {
         {
             add_function1!(&mut ctx, sqrt, cbrt, exp, sin, cos, tan, asin, acos, atan, factorial);
 
-            ctx.add_function2("log".into(), |x, y| {
-                x.log(y)
-            });
+            ctx.add_function2("log".into(), |x, y| x.log(y));
 
-            ctx.add_function2("pow".into(), |x, y| {
-                x.powf(y)
-            })
+            ctx.add_function2("pow".into(), |x, y| x.powf(y))
         }
         ctx
     }
@@ -325,7 +322,7 @@ pub fn eval_expr(expr: &Expr) -> Result<f64, EvalError> {
 #[derive(Debug)]
 pub enum ParseOrEvalError {
     ParseError(ParseError),
-    EvalError(EvalError)
+    EvalError(EvalError),
 }
 
 impl fmt::Display for ParseOrEvalError {
@@ -334,9 +331,7 @@ impl fmt::Display for ParseOrEvalError {
     }
 }
 
-impl error::Error for ParseOrEvalError {
-
-}
+impl error::Error for ParseOrEvalError {}
 
 impl From<ParseError> for ParseOrEvalError {
     fn from(e: ParseError) -> ParseOrEvalError {
@@ -351,9 +346,7 @@ impl From<EvalError> for ParseOrEvalError {
 }
 
 /// Parse and evaluate an expression
-///
-/// @param expr a string containing the expression
-pub fn parse_and_eval_expr(expr: &str) -> Result<f64, ParseOrEvalError > {
+pub fn parse_and_eval_expr(expr: &str) -> Result<f64, ParseOrEvalError> {
     parse_expr(expr)
         .map_err(ParseOrEvalError::from)
         .and_then(|x| eval_expr(&x).map_err(ParseOrEvalError::from))
@@ -362,20 +355,16 @@ pub fn parse_and_eval_expr(expr: &str) -> Result<f64, ParseOrEvalError > {
 use std::ffi::CStr;
 use std::os::raw::{c_char, c_double};
 
-/// Parse and evaluate an expression
+/// Parse and evaluate an expression. The result will stored in [`result`]
 ///
-/// @param expr a nul-terminated string containing the expression
-/// @param result pointer to a floating pointer number where the results will be stored after a successful call to this function
-/// @return true if success; otherwise false
-#[allow(dead_code)]
+/// # Safety
+/// This function dereferences [`expr`] you passed.
 #[no_mangle]
-pub extern "C" fn eval_expr_c(expr: *const c_char, result: &mut c_double) -> bool {
-    unsafe {
-        CStr::from_ptr(expr)
-    }
+pub unsafe extern "C" fn eval_expr_c(expr: *const c_char, result: &mut c_double) -> bool {
+    CStr::from_ptr(expr)
         .to_str()
-        .map_or(None, Some)
-        .and_then(|expr| parse_and_eval_expr(expr).map_or(None, Some))
+        .ok()
+        .and_then(|expr| parse_and_eval_expr(expr).ok())
         .map_or(false, |val| {
             *result = val as c_double;
             true

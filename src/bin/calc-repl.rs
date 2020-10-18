@@ -1,13 +1,12 @@
-use std::io::{self, Write};
 use calc::parse_and_eval_expr;
+use std::io::{self, Write};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     ctrlc::set_handler(move || {
         println!("received Ctrl+C!");
         std::process::exit(0);
     })
-        .expect("Error setting Ctrl-C handler");
-
+    .expect("Error setting Ctrl-C handler");
 
     let mut expr = String::new();
     let stdin = io::stdin();
@@ -17,7 +16,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         print!("IN  [{}]: ", counter);
         stdout.flush()?;
         stdin.read_line(&mut expr)?;
-        if expr.trim().len() == 0 {
+        if expr.trim().is_empty() {
             continue;
         }
 
@@ -35,4 +34,3 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         counter += 1;
     }
 }
-

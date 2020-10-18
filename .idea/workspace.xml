@@ -26,12 +26,13 @@
       <change afterPath="$PROJECT_DIR$/.idea/calc.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/build.rs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/calc.h" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/bin/calc-repl.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,21 +143,21 @@
       <screen x="0" y="0" width="1504" height="963" />
     </state>
     <state x="533" y="236" key="FileChooserDialogImpl/0.0.1504.963@0.0.1504.963" timestamp="1602513185065" />
-    <state width="1461" height="256" key="GridCell.Tab.0.bottom" timestamp="1602518828361">
+    <state width="1461" height="256" key="GridCell.Tab.0.bottom" timestamp="1602519343675">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1461" height="256" key="GridCell.Tab.0.bottom/0.0.1504.963@0.0.1504.963" timestamp="1602518828361" />
-    <state width="1461" height="256" key="GridCell.Tab.0.center" timestamp="1602518828361">
+    <state width="1461" height="256" key="GridCell.Tab.0.bottom/0.0.1504.963@0.0.1504.963" timestamp="1602519343675" />
+    <state width="1461" height="256" key="GridCell.Tab.0.center" timestamp="1602519343674">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1461" height="256" key="GridCell.Tab.0.center/0.0.1504.963@0.0.1504.963" timestamp="1602518828361" />
-    <state width="1461" height="256" key="GridCell.Tab.0.left" timestamp="1602518828360">
+    <state width="1461" height="256" key="GridCell.Tab.0.center/0.0.1504.963@0.0.1504.963" timestamp="1602519343674" />
+    <state width="1461" height="256" key="GridCell.Tab.0.left" timestamp="1602519343674">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1461" height="256" key="GridCell.Tab.0.left/0.0.1504.963@0.0.1504.963" timestamp="1602518828360" />
-    <state width="1461" height="256" key="GridCell.Tab.0.right" timestamp="1602518828361">
+    <state width="1461" height="256" key="GridCell.Tab.0.left/0.0.1504.963@0.0.1504.963" timestamp="1602519343674" />
+    <state width="1461" height="256" key="GridCell.Tab.0.right" timestamp="1602519343675">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state width="1461" height="256" key="GridCell.Tab.0.right/0.0.1504.963@0.0.1504.963" timestamp="1602518828361" />
+    <state width="1461" height="256" key="GridCell.Tab.0.right/0.0.1504.963@0.0.1504.963" timestamp="1602519343675" />
   </component>
 </project>

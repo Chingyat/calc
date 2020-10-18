@@ -1,8 +1,8 @@
 extern crate cbindgen;
 
-use std::env;
 use cbindgen::Config;
 use cbindgen::Language::C;
+use std::env;
 
 fn main() {
     let crate_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
@@ -17,5 +17,5 @@ fn main() {
         .with_crate(crate_dir)
         .generate()
         .expect("Unable to generate bindings")
-        .write_to_file("calc.h");
+        .write_to_file(env::var("OUT_DIR").unwrap() + "/calc.h");
 }
